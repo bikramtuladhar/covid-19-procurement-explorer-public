@@ -22,7 +22,7 @@ const apiRoutes = {
     'visualization.global-suppliers': 'api/v1/visualization/global-suppliers/',
     'visualization.equity-indicators':
         'api/v1/visualization/equity-indicators/',
-    'visualization.world-map': 'api/v1/visualization/world-map/',
+    'visualization.world-map': 'api/v1/visualization/world-maps/',
     'visualization.country-map': 'api/v1/visualization/country-map/',
     'visualization.world-map-race': 'api/v1/visualization/world-map-race/',
     'visualization.country-partners': 'api/v1/visualization/country-partners/',

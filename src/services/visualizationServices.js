@@ -5,6 +5,8 @@ class VisualizationServices {
     static async GlobalMap(params) {
         try {
             const res = await Api.get(getURI('visualization.world-map'), params)
+            // if here error  occured then only here it can go to catch
+            // throw new Error('Api error');
             return res.body
         } catch (error) {
             console.log(error)
