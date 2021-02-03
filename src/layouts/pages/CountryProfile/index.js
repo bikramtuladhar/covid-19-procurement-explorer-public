@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { isEmpty } from 'lodash'
+import { Helmet } from 'react-helmet';
 import { setCountryCurrency } from '../../../store/reducers/general/action'
 import CountrySelector from "../../../components/CountrySelector/CountrySelector"
 import CountryMapElement from "./sections/CountryMapElement"
@@ -15,6 +16,7 @@ import CountryBuyers from "./tabs/CountryBuyers"
 import CountrySuppliers from "./tabs/CountrySuppliers"
 import CountryProducts from "./tabs/CountryProducts"
 import { DATA, INSIGHTS, CONTRACTS, EQUITY, BUYERS, SUPPLIERS, PRODUCTS, METHODOLOGY } from "../../../constants/Tab"
+import CountryImage from '../../../assets/img/hero-image.jpg'
 
 const CountryProfile = () => {
     const countries = useSelector((state) => state.general.countries)
@@ -60,6 +62,22 @@ const CountryProfile = () => {
 
     return (
         <section className="pt-20 -mt-8 bg-blue-0">
+            <Helmet>
+                <title>{`Country Profile of ${countrySlug} `}</title>
+                <meta name="description" content="Covid 19 procurement country description profile page" />
+                <meta
+                    property="og:description"
+                    content={'This is country profile page.'}
+                />
+                <meta
+                    property="og:title"
+                    content={
+                        'Country profile page'
+                    }
+                />
+                {/* <meta property="og:image" content={CountryImage} />
+                <meta name="twitter:card" content="Covid 19 procurement twitter" /> */}
+            </Helmet>
             {!isEmpty(countryData) && (
                 <section className="px-4">
                     <div className="container mx-auto">

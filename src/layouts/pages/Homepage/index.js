@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import { Helmet } from 'react-helmet';
 import useTrans from '../../../hooks/useTrans'
 import WorldMapRace from './sections/WorldMapRace'
 import NewsSection from './sections/NewsSection'
@@ -15,6 +16,21 @@ const Home = () => {
 
     return (
         <Fragment>
+            <Helmet>
+                <title>{`Covid-19 Procurement Explorer`}</title>
+                <meta
+                    property="og:description"
+                    content={'Covid-19 Procurement Explorer.'}
+                />
+                <meta
+                    property="og:title"
+                    content={
+                        'Covid-19 Procurement Explorer.'
+                    }
+                />
+                {/* <meta property="og:image" content={CountryImage} /> */}
+                {/* <meta name="twitter:card" content="Covid 19 procurement twitter" /> */}
+            </Helmet>
             <section className="hero-section relative [ mx-auto px-4 ] [ flex flex-col justify-center ]">
                 <div className="outer-circle mt-40 mx-auto relative [ flex justify-center items-center ]">
                     <CircleIcon className="circle-ring absolute h-full w-full z-negative" />
