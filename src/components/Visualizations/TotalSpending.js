@@ -8,6 +8,7 @@ import Loader from '../Loader/Loader'
 import { dateDiff, formatDate } from '../../helpers/date'
 import useTrans from '../../hooks/useTrans'
 import HelpText from '../../components/HelpText/HelpText'
+import ErrorHandler from '../ErrorHandler'
 
 const TotalSpending = (props) => {
     // ===========================================================================
@@ -27,6 +28,8 @@ const TotalSpending = (props) => {
         areaChartData: [],
         barChartData: []
     })
+    const [error, setError] = useState(false)
+    const [errorMsg, setErrorMsg] = useState('')
     const barColorValue = '#ABBABF'
     const { trans } = useTrans()
 
@@ -36,8 +39,16 @@ const TotalSpending = (props) => {
     useEffect(() => {
         VisualizationServices.TotalSpending(params)
             .then((response) => {
-                setOriginalData(response)
-                setLoading(false)
+                if (response) {
+                    setOriginalData(response)
+                    setLoading(false)
+                } else {
+                    setLoading(false)
+                    throw new Error()
+                }
+            })
+            .catch(() => {
+                setError(true)
             })
     }, [params?.country, params?.buyer, params?.supplier])
 
@@ -92,7 +103,7 @@ const TotalSpending = (props) => {
             </div>
             {loading ? (
                 <Loader sm />
-            ) : (
+            ) : !error ? (
                 <div className="flex items-end">
                     <div className="w-2/5">
                         <AreaChartBlock
@@ -114,6 +125,8 @@ const TotalSpending = (props) => {
                         />
                     </div>
                 </div>
+            ) : (
+                <ErrorHandler />
             )}
         </div>
     )

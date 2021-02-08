@@ -4,8 +4,8 @@ export const API_URL = process.env.REACT_APP_API_URL
 
 const apiRoutes = {
     // visualization api
-    'visualization.total-spending': 'api/v1/visualization/total-spending/',
-    'visualization.total-contracts': 'api/v1/visualization/total-contracts/',
+    // 'visualization.total-spending': 'api/v1/visualization/total-spending/',
+    // 'visualization.total-contracts': 'api/v1/visualization/total-contracts/',
     'visualization.average-bids': 'api/v1/visualization/average-bids/',
     'visualization.direct-open': 'api/v1/visualization/direct-open/',
     'visualization.top-suppliers': 'api/v1/visualization/top-suppliers/',
@@ -22,7 +22,7 @@ const apiRoutes = {
     'visualization.global-suppliers': 'api/v1/visualization/global-suppliers/',
     'visualization.equity-indicators':
         'api/v1/visualization/equity-indicators/',
-    'visualization.world-map': 'api/v1/visualization/world-map/',
+    // 'visualization.world-map': 'api/v1/visualization/world-map/',
     'visualization.country-map': 'api/v1/visualization/country-map/',
     'visualization.world-map-race': 'api/v1/visualization/world-map-race/',
     'visualization.country-partners': 'api/v1/visualization/country-partners/',

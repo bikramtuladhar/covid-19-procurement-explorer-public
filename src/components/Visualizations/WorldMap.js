@@ -9,6 +9,7 @@ import { ReactComponent as ShareIcon } from '../../assets/img/icons/ic_share.svg
 import { ReactComponent as FullViewIcon } from '../../assets/img/icons/ic_fullscreen.svg'
 import { CONTINENTS } from '../../helpers/country'
 import Loader from '../../components/Loader/Loader'
+import ErrorHandler from '../ErrorHandler'
 
 const WorldMap = (props) => {
     // ===========================================================================
@@ -23,15 +24,31 @@ const WorldMap = (props) => {
         label: 'All Continents'
     })
     const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(false)
+    const [errorMsg, setErrorMsg] = useState('')
 
     // ===========================================================================
     // Hooks
     // ===========================================================================
     useEffect(() => {
-        VisualizationServices.GlobalMap(params).then((response) => {
-            setData(response)
-            setLoading(false)
-        })
+        VisualizationServices.GlobalMap(params)
+            .then((response) => {
+                console.log(response)
+                // setData(response)
+                // setLoading(false)
+                if (response.result) {
+                    setData(response)
+                    setLoading(false)
+                } else {
+                    // we can send error response from backend too/if no any status from backend then.
+                    setLoading(false)
+                    throw new Error()
+                }
+            })
+            .catch((err) => {
+                setError(true)
+                setErrorMsg('World Map Error')
+            })
     }, [params])
 
     useEffect(() => {
@@ -121,7 +138,7 @@ const WorldMap = (props) => {
                             <div>
                                 {loading ? (
                                     <Loader />
-                                ) : (
+                                ) : !error ? (
                                     <GlobalMap
                                         data={mapData}
                                         contractType={contractType}
@@ -129,6 +146,8 @@ const WorldMap = (props) => {
                                             CONTINENTS[selectedContinent.value]
                                         }
                                     />
+                                ) : (
+                                    <ErrorHandler />
                                 )}
                             </div>
                         </div>

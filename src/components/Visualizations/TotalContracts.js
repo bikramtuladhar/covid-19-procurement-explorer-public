@@ -5,6 +5,7 @@ import useTrans from '../../hooks/useTrans'
 import VisualizationServices from '../../services/visualizationServices'
 import AreaChartBlock from '../Charts/AreaChart/AreaChartBlock'
 import { dateDiff, formatDate } from '../../helpers/date'
+import ErrorHandler from '../ErrorHandler'
 
 const TotalContracts = (props) => {
     const barColorValue = '#ABBABF'
@@ -15,16 +16,27 @@ const TotalContracts = (props) => {
     const { label = 'Total Contracts', params } = props
     const [loading, setLoading] = useState(true)
     const [totalContracts, setTotalContracts] = useState()
+    const [error, setError] = useState(false)
+    const [errorMsg, setErrorMsg] = useState('')
     const { trans } = useTrans()
 
     // ===========================================================================
     // Hooks
     // ===========================================================================
     useEffect(() => {
-        VisualizationServices.TotalContracts(params).then((response) => {
-            setTotalContracts(response)
-            setLoading(false)
-        })
+        VisualizationServices.TotalContracts(params)
+            .then((response) => {
+                if (response) {
+                    setTotalContracts(response)
+                    setLoading(false)
+                } else {
+                    setLoading(false)
+                    throw new Error()
+                }
+            })
+            .catch(() => {
+                setError(true)
+            })
     }, [params?.country, params?.buyer, params?.supplier])
 
     // ===========================================================================
@@ -64,7 +76,7 @@ const TotalContracts = (props) => {
             <h3 className="uppercase font-bold  text-primary-dark">{label}</h3>
             {loading ? (
                 <Loader sm />
-            ) : (
+            ) : !error ? (
                 <div className="flex items-end">
                     <div className="w-2/5">
                         <AreaChartBlock
@@ -88,6 +100,8 @@ const TotalContracts = (props) => {
                         />
                     </div>
                 </div>
+            ) : (
+                <ErrorHandler />
             )}
         </div>
     )
